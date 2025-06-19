@@ -24,17 +24,13 @@ typedef struct {
     float valorEstimado;
 } Pedido;
 
-// Nó da lista ligada
-typedef struct No {
-    Pedido dado;           // Dados do pedido
-    struct No* proximo;    // Ponteiro para o próximo nó
-} No;
 
 // Definir tipo fila e protótipos das funções
 typedef struct {
-     No* inicio;            // Ponteiro para o primeiro nó
-    No* fim;               // Ponteiro para o último nó
-    int tamanho; 
+    Pedido dados[MAX_PEDIDOS];
+    int inicio;
+    int fim;
+    int tamanho;
 } FilaPedidos;
 
 // Função para cadastrar um novo cliente

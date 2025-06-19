@@ -7,6 +7,7 @@ int main() {
     // Inicializa a fila e a armazenar na variavel fila
     FilaPedidos* fila = fila_inicializar();
 
+    listar_pedidos_fila(fila);
     // Verificar se a fila foi inicializada corretamente
     if (fila == NULL) {
         printf("Falha ao inicializar a fila.\n");

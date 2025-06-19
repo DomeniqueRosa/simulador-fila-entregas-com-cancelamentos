@@ -8,8 +8,8 @@ FilaPedidos* fila_inicializar()
 {
     FilaPedidos* nova_fila = (FilaPedidos*)malloc(sizeof(FilaPedidos));
     if (nova_fila != NULL) {
-        nova_fila->inicio = NULL;
-        nova_fila->fim = NULL;
+        nova_fila->inicio = 0;
+        nova_fila->fim = -1;
         nova_fila->tamanho = 0;
     }
     return nova_fila;
@@ -19,26 +19,12 @@ FilaPedidos* fila_inicializar()
 /* Retorna true se inseriu, false se cheia */
 bool fila_inserir(FilaPedidos* fila, Pedido* novo)
 {
-    if (fila == NULL) return false;
-
-    // Cria um novo nó
-    No* novo_no = (No*)malloc(sizeof(No));
-    if (novo_no == NULL) return false;  // Falha na alocação de memória
-
-    novo_no->dado = *novo;     
-    novo_no->proximo = NULL;   
-
-    if (fila->fim != NULL) {
-        fila->fim->proximo = novo_no;  // Faz o ponteiro do último nó apontar para o novo nó
-    }
-
-    fila->fim = novo_no;    // O novo nó agora é o fim da fila
-
-    if (fila->inicio == NULL) {  // Se a fila estava vazia, o novo nó é também o início
-        fila->inicio = novo_no;
-    }
-
+    if (fila == NULL || fila->tamanho >= MAX_PEDIDOS) return false;
+  
+    fila->fim = (fila->fim + 1) % MAX_PEDIDOS;
+    fila->dados[fila->fim] = *novo;
     fila->tamanho++;
+
     return true;
 }
 
@@ -63,21 +49,22 @@ void cadastrar_pedido(FilaPedidos* fila, Cliente* cliente,  int codigo_prod, cha
 
 // Função para listar pedidos na fila
 void listar_pedidos_fila(FilaPedidos* fila) {
-      if (fila == NULL || fila->inicio == NULL) {
-        printf("Fila vazia\n");
+
+    if(fila->tamanho == 0){
+        printf("fila vazia\n");
         return;
     }
-
-    No* atual = fila->inicio;
-    printf("Pedidos na fila:\n");
-
-    while (atual != NULL) {
-        Pedido p = atual->dado;
+    
+    for(int i = 0; i < fila->tamanho; i++){
+        // Acessando o pedido na posição circular
+        Pedido p = fila->dados[(fila->inicio + i) % MAX_PEDIDOS];
+        
+        // Imprimindo os dados do pedido
         printf("Pedido %d: %s - %s - R$%.2f\n", 
                p.codigoPedido, 
                p.cliente.nome, 
                p.produto, 
                p.valorEstimado);
-        atual = atual->proximo;  // Avança para o próximo nó
     }
+    
 }
