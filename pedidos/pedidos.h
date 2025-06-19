@@ -1,51 +1,53 @@
-#ifndef pedidos_h
-#define pedidos_h
+#ifndef PEDIDOS_H
+#define PEDIDOS_H
+
 #include <stdbool.h>
 
+#define MAX_NOME 100
+#define MAX_CPF 12
+#define MAX_TEL 20
+#define MAX_PEDIDOS 100
 
-#define maxNome 100
-#define maxCPF 12
-#define maxTel 20
-#define MAX_PEDIDOS 10
 
-
-//Estrutura que representa os dados de um cliente
+// Estrutura cliente
 typedef struct {
-  char nome[maxNome];
-  char CPF[maxCPF];
-  char telefone[maxTel];
-}Cliente;
+    char nome[MAX_NOME];
+    char CPF[MAX_CPF];
+    char telefone[MAX_TEL];
+} Cliente;
 
-//Estrutura que representa os dados de um pedido
+// Estrutura pedido
 typedef struct {
     Cliente cliente;
     int codigoPedido;
     char produto[100];
     float valorEstimado;
-}Pedido;
+} Pedido;
 
-//definir tipo fila e prototicos das funcoes
+// Nó da lista ligada
+typedef struct No {
+    Pedido dado;           // Dados do pedido
+    struct No* proximo;    // Ponteiro para o próximo nó
+} No;
+
+// Definir tipo fila e protótipos das funções
 typedef struct {
-    Pedido pedidos[MAX_PEDIDOS];
-    int inicio;
-    int fim;
-    int tamanho;
-}FilaPedidos;
+     No* inicio;            // Ponteiro para o primeiro nó
+    No* fim;               // Ponteiro para o último nó
+    int tamanho; 
+} FilaPedidos;
 
-<<<<<<< HEAD
-// Função para cadastrar um novo pedido
-void cadastrarPedido(int codigo, const char* cliente, const char* produto, float valor);
+// Função para cadastrar um novo cliente
+bool cadastrar_cliente(char* nome, char* cpf, char* telefone);
 
-//* Protótipos das funções da fila */
-void fila_inicializar(FilaPedidos *f);
-=======
-// Função para cadastrar um novo pedido
-void cadastrarPedido(int codigo, const char* cliente, const char* produto, float valor);
+// Função para cadastrar um novo pedid
+void cadastrar_pedido(FilaPedidos* fila, Cliente* cliente,  int codigo_prod, char* produto, float valor);
 
-//* Protótipos das funções da fila */
-FilaPedidos fila_inicializar();
->>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
-bool fila_cheia(const FilaPedidos *f);
-bool fila_inserir(FilaPedidos *f, const Pedido *novo);
+
+// Protótipos das funções da fila
+FilaPedidos* fila_inicializar();
+bool fila_cheia(FilaPedidos* f);
+bool fila_inserir(FilaPedidos* f, Pedido* novo);
+void listar_pedidos_fila(FilaPedidos* fila);
 
 #endif
