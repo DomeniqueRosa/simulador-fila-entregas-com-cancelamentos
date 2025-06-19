@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include "./pedidos/pedidos.h"
 
-
-
 int main() {
     // Inicializa a fila e a armazenar na variavel fila
     FilaPedidos* fila = fila_inicializar();
@@ -29,12 +27,5 @@ int main() {
 
     // Listar pedidos na fila
     listar_pedidos_fila(fila);
-
-    // Verificar se a fila está cheia
-    if (fila_cheia(fila)) {
-        printf("\nA fila está cheia!\n");
-    } else {
-        printf("\nA fila não está cheia.\n");
-    }
 
 }
