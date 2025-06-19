@@ -25,24 +25,24 @@ typedef struct {
 } Pedido;
 
 
-// Definir tipo fila e protótipos das funções
+//  fila circular 
 typedef struct {
     Pedido dados[MAX_PEDIDOS];
     int inicio;
     int fim;
     int tamanho;
-} FilaPedidos;
+} Fila;
 
 // Função para cadastrar um novo cliente
 bool cadastrar_cliente(char* nome, char* cpf, char* telefone);
 
 // Função para cadastrar um novo pedid
-void cadastrar_pedido(FilaPedidos* fila, Cliente* cliente,  int codigo_prod, char* produto, float valor);
+void cadastrar_pedido(Fila* fila, Cliente* cliente,  int codigo_prod, char* produto, float valor);
 
 
 // Protótipos das funções da fila
-FilaPedidos* fila_inicializar();
-bool fila_inserir(FilaPedidos* f, Pedido* novo);
-void listar_pedidos_fila(FilaPedidos* fila);
+Fila* fila_inicializar();
+bool fila_inserir(Fila* f, Pedido* novo);
+void listar_pedidos_fila(Fila* fila);
 
 #endif

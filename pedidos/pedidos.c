@@ -4,9 +4,9 @@
 #include <string.h> // Para usar strcpy
 
 /* Função para inicializar e retornar uma fila vazia */
-FilaPedidos* fila_inicializar()
+Fila* fila_inicializar()
 {
-    FilaPedidos* nova_fila = (FilaPedidos*)malloc(sizeof(FilaPedidos));
+    Fila* nova_fila = (Fila*)malloc(sizeof(Fila));
     if (nova_fila != NULL) {
         nova_fila->inicio = 0;
         nova_fila->fim = -1;
@@ -17,7 +17,7 @@ FilaPedidos* fila_inicializar()
 
 /* Insere um pedido na fila circular */
 /* Retorna true se inseriu, false se cheia */
-bool fila_inserir(FilaPedidos* fila, Pedido* novo)
+bool fila_inserir(Fila* fila, Pedido* novo)
 {
     if (fila == NULL || fila->tamanho >= MAX_PEDIDOS) return false;
   
@@ -29,7 +29,7 @@ bool fila_inserir(FilaPedidos* fila, Pedido* novo)
 }
 
 // Função para cadastrar um novo pedid
-void cadastrar_pedido(FilaPedidos* fila, Cliente* cliente,  int codigo_prod, char* produto, float valor) {
+void cadastrar_pedido(Fila* fila, Cliente* cliente,  int codigo_prod, char* produto, float valor) {
     Pedido pedido;
     pedido.codigoPedido = codigo_prod;  // Corrigido para 'codigoPedido'
     pedido.valorEstimado = valor;  // Corrigido para 'valorEstimado'
@@ -48,7 +48,7 @@ void cadastrar_pedido(FilaPedidos* fila, Cliente* cliente,  int codigo_prod, cha
 }
 
 // Função para listar pedidos na fila
-void listar_pedidos_fila(FilaPedidos* fila) {
+void listar_pedidos_fila(Fila* fila) {
 
     if(fila->tamanho == 0){
         printf("fila vazia\n");
