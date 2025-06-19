@@ -1,11 +1,19 @@
 #include pedidos_h
 #include <stdbool.h>
 
+<<<<<<< HEAD
+// Definição da fila de pedidos
+#define MAX_PEDIDOS 10
+
+/* Função para inicializar e retornar uma fila vazia */
+FilaPedidos fila_inicializar()
+=======
 // Definição da fila de pedidos
 #define MAX_PEDIDOS 10;
 
 /* Função para inicializar e retornar uma fila vazia */
 FilaPedidos fila_inicializar()
+>>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
 {
     FilaPedidos f;
     f.inicio = 0;

@@ -32,11 +32,19 @@ typedef struct {
     int tamanho;
 }FilaPedidos;
 
+<<<<<<< HEAD
+// Função para cadastrar um novo pedido
+void cadastrarPedido(int codigo, const char* cliente, const char* produto, float valor);
+
+//* Protótipos das funções da fila */
+void fila_inicializar(FilaPedidos *f);
+=======
 // Função para cadastrar um novo pedido
 void cadastrarPedido(int codigo, const char* cliente, const char* produto, float valor);
 
 //* Protótipos das funções da fila */
 FilaPedidos fila_inicializar();
+>>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
 bool fila_cheia(const FilaPedidos *f);
 bool fila_inserir(FilaPedidos *f, const Pedido *novo);
 

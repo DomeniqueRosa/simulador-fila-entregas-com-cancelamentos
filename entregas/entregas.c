@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+#include <stdio.h>
+#include "ENTREGAS.H"
+=======
 #include <stdio.h>
 #include "entregas.h"
+>>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
 
 #define MAX_PEDIDOS 10  // Definindo o tamanho máximo da fila
 

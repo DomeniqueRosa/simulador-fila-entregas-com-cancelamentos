@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+#include <stdio.h>
+#include "PEDIDO.H"
+#include "ENTREGAS.H"
+#include "CANCELAMENTO.H"
+=======
 #include <stdio.h>
 #include "pedidos.h"
 #include "entregas.h"
 #include "cancelamento.h"
+>>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
 
 int main() {
     // Inicializa a fila e a armazena em uma variável

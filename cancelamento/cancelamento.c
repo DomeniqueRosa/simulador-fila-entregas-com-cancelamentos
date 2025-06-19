@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+#include <stdio.h>
+#include "cancelamento.h"
+#include "ENTREGAS.H"  // Para manipular a fila de entregas
+=======
 #include <stdio.h>
 #include "cancelamento.h"
 #include "entregas.h"  // Para manipular a fila de entregas
+>>>>>>> 6e93971efc379efbbeb510ae05a9a428307527db
 
 #define MAX_PEDIDOS 10  // Definindo o tamanho máximo da pilha
 
