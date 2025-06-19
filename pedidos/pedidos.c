@@ -15,12 +15,6 @@ FilaPedidos* fila_inicializar()
     return nova_fila;
 }
 
-/* Verifica se a fila está cheia */
-bool fila_cheia(FilaPedidos* f)
-{
-    return (f == NULL || f->tamanho > MAX_PEDIDOS);
-}
-
 /* Insere um pedido na fila circular */
 /* Retorna true se inseriu, false se cheia */
 bool fila_inserir(FilaPedidos* fila, Pedido* novo)
