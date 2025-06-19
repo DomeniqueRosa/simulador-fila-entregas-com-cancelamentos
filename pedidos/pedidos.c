@@ -1,12 +1,17 @@
-#include "PEDIDO_H"
+#include pedidos_h
 #include <stdbool.h>
 
-/* Inicializa a fila vazia */
-void fila_inicializar(FilaPedidos *f)
+// Definição da fila de pedidos
+#define MAX_PEDIDOS 10;
+
+/* Função para inicializar e retornar uma fila vazia */
+FilaPedidos fila_inicializar()
 {
-    f->inicio = 0;
-    f->fim = 0;
-    f->tamanho = 0;
+    FilaPedidos f;
+    f.inicio = 0;
+    f.fim = 0;
+    f.tamanho = 0;
+    return f;
 }
 
 /* Verifica se a fila está cheia */
@@ -26,4 +31,17 @@ bool fila_inserir(FilaPedidos *f, const Pedido *novo)
     f->fim = (f->fim + 1) % MAX_PEDIDOS;      // avança índice fim circularmente
     f->tamanho++;                             // incrementa tamanho da fila
     return true;
+}
+
+// Função para cadastrar um novo pedido
+void cadastrarPedido(FilaPedidos *fila, int codigo, const char* cliente, const char* produto, float valor) {
+    Pedido pedido;
+    pedido.codigo = codigo;
+    strcpy(pedido.cliente, cliente);
+    strcpy(pedido.produto, produto);
+    pedido.valor = valor;
+    
+    // Inserir o pedido na fila de entregas
+    fila_inserir(fila, &pedido);
+    printf("Pedido %d cadastrado e inserido na fila.\n", pedido.codigo);
 }
