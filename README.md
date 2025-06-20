@@ -32,22 +32,22 @@ O código deve conter um comentário de autoria no topo de cada função, com no
 
 Funcionalidades Mínimas Obrigatórias
 
-1. Cadastrar novo pedido (cliente, código do pedido, produto, valor estimado)
+ok - 1. Cadastrar novo pedido (cliente, código do pedido, produto, valor estimado)
 
-2. Inserir pedido na fila de entregas (fila circular)
+ok - 2. Inserir pedido na fila de entregas (fila circular)
 
-3. Cancelar pedido, retirando-o da fila e movendo para a pilha de cancelamentos
+ok - 3. Cancelar pedido, retirando-o da fila e movendo para a pilha de cancelamentos
 
-4. Realizar entrega do próximo pedido da fila
+ok - 4. Realizar entrega do próximo pedido da fila
 
-5. Listar pedidos na fila
+ok - 5. Listar pedidos na fila
 
-6. Exibir pedidos cancelados
+ok - 6. Exibir pedidos cancelados
 
 7. Gerar estatísticas finais:
 
 a. Total de pedidos entregues e cancelados
 
-b. Valor total das entregas realizadas
+ok - b. Valor total das entregas realizadas
 
 c. Valor total dos pedidos cancelados

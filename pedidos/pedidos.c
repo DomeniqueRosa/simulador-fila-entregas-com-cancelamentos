@@ -68,3 +68,16 @@ void listar_pedidos_fila(Fila* fila) {
     }
     
 }
+
+Pedido* fila_remover(Fila* fila){
+    if(fila->inicio == 0 || fila->tamanho == 0){
+        printf("Não existe pedido para cancelar.\n");
+        return NULL;
+    }
+
+    Pedido* pedido = &fila->dados[fila->inicio];
+    fila->inicio = (fila->inicio + 1) % MAX_PEDIDOS;
+    fila->tamanho--;
+
+    return pedido;
+}

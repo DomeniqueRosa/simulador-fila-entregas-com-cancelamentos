@@ -44,5 +44,6 @@ void cadastrar_pedido(Fila* fila, Cliente* cliente,  int codigo_prod, char* prod
 Fila* fila_inicializar();
 bool fila_inserir(Fila* f, Pedido* novo);
 void listar_pedidos_fila(Fila* fila);
+Pedido* fila_remover(Fila* fila);
 
 #endif
