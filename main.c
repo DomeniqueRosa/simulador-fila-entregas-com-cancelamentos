@@ -95,7 +95,6 @@ int main() {
                 gerar_estatisticas_cancelados(est_cancelados);
                 printf("\nTotal de pedidos recebidos: %d\n", pedidos_recebidos);
                 int em_aberto = pedidos_recebidos - (est_entregues.pedidos_entregues + est_cancelados.pedidos_cancelados);
-                if (em_aberto < 0) em_aberto = 0;
                 printf("Total de pedidos em aberto: %d\n", em_aberto);
                 break;
             case 0:
