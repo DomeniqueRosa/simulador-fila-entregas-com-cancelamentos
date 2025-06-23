@@ -1,75 +1,110 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include "./pedidos/pedidos.h"
 #include "./entregas/entregas.h"
 #include "./cancelamento/cancelamento.h"
 
 int main() {
-    // Inicializa a fila e a armazena na variável 'fila'
     Fila* fila = fila_inicializar();
-
-    // Verificar se a fila foi inicializada corretamente
-    if (fila == NULL) {
-        printf("Erro: Falha ao inicializar a fila.\n");
-        return 1;
-    }
-    printf("Sucesso: Fila de pedidos inicializada com sucesso!\n");
-
-    // Criar clientes
-    Cliente clienteA = {"Cliente A", "12345678901", "111-222-3333"};
-    Cliente clienteB = {"Cliente B", "12345678902", "444-555-6666"};
-    Cliente clienteC = {"Cliente C", "12345678903", "777-888-9999"};
-
-    // Cadastrar pedidos
-    printf("\nIniciando o cadastro de pedidos...\n");
-    cadastrar_pedido(fila, &clienteA, 1, "Produto X", 100.50);
-    cadastrar_pedido(fila, &clienteB, 2, "Produto Y", 200.75);
-    cadastrar_pedido(fila, &clienteC, 3, "Produto Z", 150.00);
-
-    // Exibir pedidos na fila antes da entrega
-    printf("\nLista de pedidos na fila antes da entrega:\n");
-    listar_pedidos_fila(fila);
-
-    // Inicializa as estatísticas de entrega
-    Estatisticas est = {0, 0.0};
-
-    // Realizar entrega de um pedido (remover o primeiro pedido da fila)
-    printf("\nIniciando a entrega do primeiro pedido da fila...\n");
-    int resultado = realizar_entrega(fila, &est);
-
-    if (resultado) {
-        printf("\nSucesso: Pedido entregue com sucesso!\n");
-    } else {
-        printf("\nErro: Falha ao realizar a entrega. Nenhum pedido na fila.\n");
-    }
-
-    // Exibir estatísticas após a entrega
-    printf("\nEstatísticas após a entrega:\n");
-    printf("Pedidos entregues: %d\n", est.pedidos_entregues);
-    printf("Valor total das entregas: %.2f\n", est.valor_entregues);
-
-    // Exibir pedidos na fila após a entrega
-    printf("\nLista de pedidos na fila após a entrega:\n");
-    listar_pedidos_fila(fila);
-
-    // Testar cancelamento de pedido
     Pilha* pilha = inicializar_pilha();
 
-    printf("\nIniciando o cancelamento de um pedido...\n");
-    cancelar_pedido(fila, pilha);
+    if (fila == NULL || pilha == NULL) {
+        printf("Erro ao inicializar estruturas.\n");
+        return 1;
+    }
 
-    // Mostrar lista de pedidos após o cancelamento
-    printf("\nLista de pedidos na fila após o cancelamento:\n");
-    listar_pedidos_fila(fila);
-    printf("\n");
+    Estatisticas est_entregues = {0, 0.0};
+    Estatisticas_Cancelados est_cancelados = {0, 0.0};
+    int pedidos_recebidos = 0;
 
-    // Mostrar lista de pedidos cancelados
-    exibir_pedidos_cancelados(pilha);
+    int opcao;
+    do {
+        printf("\n==== MENU ====\n");
+        printf("1 - Cadastrar pedido\n");
+        printf("2 - Listar pedidos na fila\n");
+        printf("3 - Realizar entrega\n");
+        printf("4 - Cancelar pedido\n");
+        printf("5 - Mostrar pedidos cancelados\n");
+        printf("6 - Mostrar estatísticas\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+        getchar(); // limpar buffer
 
-    //mostrar lista de pedidos depois de cancelar
-    printf("Lista de pedidos depois dos cancelamentos.\n\n");
-    listar_pedidos_fila(fila);
+        switch (opcao) {
+            case 1: {
+                Cliente cliente;
+                int id;
+                char produto[50];
+                float valor;
+
+                printf("Nome do cliente: ");
+                fgets(cliente.nome, sizeof(cliente.nome), stdin);
+                cliente.nome[strcspn(cliente.nome, "\n")] = 0;
+
+                printf("CPF: ");
+                fgets(cliente.CPF, sizeof(cliente.CPF), stdin);
+                cliente.CPF[strcspn(cliente.CPF, "\n")] = 0;
+
+                printf("Telefone: ");
+                fgets(cliente.telefone, sizeof(cliente.telefone), stdin);
+                cliente.telefone[strcspn(cliente.telefone, "\n")] = 0;
+
+                printf("ID do pedido: ");
+                scanf("%d", &id);
+                getchar();
+
+                printf("Produto: ");
+                fgets(produto, sizeof(produto), stdin);
+                produto[strcspn(produto, "\n")] = 0;
+
+                printf("Valor estimado: ");
+                scanf("%f", &valor);
+                getchar();
+
+                cadastrar_pedido(fila, &cliente, id, produto, valor);
+                pedidos_recebidos++;
+                printf("Pedido cadastrado com sucesso!\n");
+                break;
+            }
+            case 2:
+                listar_pedidos_fila(fila);
+                break;
+            case 3:
+                if (realizar_entrega(fila, &est_entregues)) {
+                    printf("Entrega realizada com sucesso.\n");
+                } else {
+                    printf("Não há pedidos para entregar.\n");
+                }
+                break;
+            case 4:
+                if (cancelar_pedido(fila, pilha, &est_cancelados)) {
+                    printf("Pedido cancelado com sucesso.\n");
+                } else {
+                    printf("Não há pedidos para cancelar.\n");
+                }
+                break;
+            case 5:
+                exibir_pedidos_cancelados(pilha);
+                break;
+            case 6:
+                printf("\n--- Estatísticas de Entregues ---\n");
+                gerar_estatisticas(est_entregues);
+                printf("\n--- Estatísticas de Cancelados ---\n");
+                gerar_estatisticas_cancelados(est_cancelados);
+                printf("\nTotal de pedidos recebidos: %d\n", pedidos_recebidos);
+                int em_aberto = pedidos_recebidos - (est_entregues.pedidos_entregues + est_cancelados.pedidos_cancelados);
+                if (em_aberto < 0) em_aberto = 0;
+                printf("Total de pedidos em aberto: %d\n", em_aberto);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+        }
+    } while (opcao != 0);
 
     return 0;
 }
