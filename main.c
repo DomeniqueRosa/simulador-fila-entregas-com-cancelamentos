@@ -64,6 +64,7 @@ int main() {
                 getchar();
 
                 cadastrar_pedido(fila, &cliente, id, produto, valor);
+                pedidos_recebidos++;
                 printf("Pedido cadastrado com sucesso!\n");
                 break;
             }
@@ -92,9 +93,8 @@ int main() {
                 gerar_estatisticas(est_entregues);
                 printf("\n--- Estatísticas de Cancelados ---\n");
                 gerar_estatisticas_cancelados(est_cancelados);
-                printf("\nTotal de pedidos recebidos: %d\n", fila->tamanho);
-                int em_aberto = fila->tamanho - (est_entregues.pedidos_entregues + est_cancelados.pedidos_cancelados);
-                printf("Total de pedidos em aberto: %d\n", em_aberto);
+                printf("\nTotal de pedidos recebidos: %d\n", pedidos_recebidos);
+                printf("Total de pedidos em aberto: %d\n", fila->tamanho);
                 break;
             case 0:
                 printf("Saindo...\n");
