@@ -27,7 +27,7 @@ int realizar_entrega(Fila *fila, Estatisticas *est) {
 
 }
 
-void gerar_estatisticas(Estatisticas *est) {
-    printf("Total de pedidos entregues: %d\n", est->pedidos_entregues);
-    printf("Valor total das entregas realizadas: %.2f\n", est->valor_entregues);
+void gerar_estatisticas(Estatisticas est) {
+    printf("Total de pedidos entregues: %d\n", est.pedidos_entregues);
+    printf("Valor total das entregas realizadas: %.2f\n", est.valor_entregues);
 }

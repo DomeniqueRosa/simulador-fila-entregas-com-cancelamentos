@@ -4,11 +4,11 @@
 #include "../entregas/entregas.h"
 #include "../pedidos/pedidos.h"
 
-
+// Inicializa a pilha de pedidos cancelados
 Pilha* inicializar_pilha() {
     Pilha* nova_pilha = (Pilha*)malloc(sizeof(Pilha));
-    if(nova_pilha == NULL){
-        printf("Erro ao alocar memoria para pilha, tente novamente");
+    if (nova_pilha == NULL) {
+        printf("Erro ao alocar memória para a pilha. Tente novamente.\n");
         return NULL;
     }
 
@@ -18,28 +18,43 @@ Pilha* inicializar_pilha() {
     return nova_pilha;
 }
 
-int cancelar_pedido(Fila* fila, Pilha *pilha) {
-    //novo o proximo pedido na fila
-    //chamar remover_fila para tirar o pedido
+// Cancela o próximo pedido da fila e empilha na pilha de cancelados
+int cancelar_pedido(Fila* fila, Pilha* pilha, Estatisticas_Cancelados* est) {
+    if (fila == NULL || pilha == NULL || est == NULL) {
+        printf("Erro: ponteiro nulo passado para cancelar_pedido.\n");
+        return 0;
+    }
+
+    // Remove o próximo pedido da fila
     Pedido* pedido = fila_remover(fila);
 
-     // Verifica se o pedido foi removido com sucesso
+    // Verifica se o pedido foi removido com sucesso
     if (pedido == NULL) {
         printf("Erro: Não há pedidos na fila para cancelar.\n");
-        return 0;  // Se não houver pedido, retorna erro
+        return 0;
     }
-   
-    //chamar push na pilha para inserir pedido que sera cancelado
-    if(push_pilha(pilha, *pedido) == 1){
+
+    // Atualizando as estatísticas
+    est->pedidos_cancelados++;
+    est->valor_cancelados += pedido->valorEstimado;
+
+    // Inserir o pedido cancelado na pilha
+    if (push_pilha(pilha, *pedido) == 1) {
         printf("Pedido %s inserido na pilha de cancelados.\n", pedido->produto);
-    }else{
-        printf("Erro: falha na alocacao de memoria.\n");
+    } else {
+        printf("Erro: falha na alocação de memória.\n");
         return 0;
     }
     return 1;
 }
 
-void exibir_pedidos_cancelados(Pilha *pilha) {
+// Exibe todos os pedidos cancelados
+void exibir_pedidos_cancelados(Pilha* pilha) {
+    if (pilha == NULL) {
+        printf("Pilha não inicializada.\n");
+        return;
+    }
+
     if (pilha->tamanho == 0) {
         printf("Não há pedidos cancelados.\n");
         return;
@@ -49,27 +64,35 @@ void exibir_pedidos_cancelados(Pilha *pilha) {
     No* atual = pilha->topo;
     while (atual != NULL) {
         printf("Pedido: %s, Valor: %.2f\n", atual->dado.produto, atual->dado.valorEstimado);
-        atual = atual->proximo;  // Move para o próximo nó
+        atual = atual->proximo;
     }
-    
 }
 
-int push_pilha(Pilha* pilha, Pedido pedido){
-    //aloca memoria para novo nó
+// Insere um pedido no topo da pilha
+int push_pilha(Pilha* pilha, Pedido pedido) {
+    if (pilha == NULL) return 0;
+
+    // Aloca memória para novo nó
     No* novo = (No*)malloc(sizeof(No));
 
-    //verifica se alocacao deu certo
-    if(novo == NULL){      
+    // Verifica se a alocação deu certo
+    if (novo == NULL) {
         return 0;
     }
 
-    //configurar nó 
+    // Configura o novo nó
     novo->dado = pedido;
     novo->proximo = pilha->topo;
 
-    //atualizar o topo da pilha
+    // Atualiza o topo da pilha
     pilha->topo = novo;
     pilha->tamanho++;
 
-    return 1; //deu certo 
+    return 1; // Sucesso
+}
+
+// Gera estatísticas de pedidos cancelados
+void gerar_estatisticas_cancelados(Estatisticas_Cancelados est) {
+    printf("Total de pedidos cancelados: %d\n", est.pedidos_cancelados);
+    printf("Valor total das entregas canceladas: %.2f\n", est.valor_cancelados);
 }

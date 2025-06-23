@@ -46,8 +46,8 @@ ok - 6. Exibir pedidos cancelados
 
 7. Gerar estatísticas finais:
 
-a. Total de pedidos entregues e cancelados
+ok- a. Total de pedidos entregues e cancelados
 
 ok - b. Valor total das entregas realizadas
 
-c. Valor total dos pedidos cancelados
+ok - c. Valor total dos pedidos cancelados

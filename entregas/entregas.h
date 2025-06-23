@@ -11,7 +11,7 @@ typedef struct {
 
 // Funções para gerenciar entregas
 int realizar_entrega(Fila *fila, Estatisticas *est);
-void gerar_estatisticas(Estatisticas *est);
+void gerar_estatisticas(Estatisticas est);
 
 #endif
 
