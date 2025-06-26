@@ -45,5 +45,6 @@ Fila* fila_inicializar();
 bool fila_inserir(Fila* f, Pedido* novo);
 void listar_pedidos_fila(Fila* fila);
 Pedido* fila_remover(Fila* fila);
+Pedido* fila_remover_ultimo(Fila* fila);
 
 #endif
