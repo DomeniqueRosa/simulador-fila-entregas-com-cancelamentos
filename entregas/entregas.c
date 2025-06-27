@@ -4,7 +4,7 @@
 int realizar_entrega(Fila *fila, Estatisticas *est) {
     
     //antes de remover verifica se a fila esta vazia
-    if(fila->inicio = 0 || fila->tamanho == 0){
+    if(fila->tamanho == 0){
         printf("Nao existe pedido para entregar");
         return 0;
     }
